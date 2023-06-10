@@ -40,6 +40,10 @@ class Export extends AbstractAction
             return false;
         }
 
+		if ($model->allow_export_all == false && empty(array_filter($ids))) {
+			return false;
+        }
+
         return true;
     }
 
