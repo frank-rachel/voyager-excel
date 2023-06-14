@@ -19,14 +19,15 @@ class BaseExport extends AbstractExport implements FromCollection
 
     public function collection()
     {
-        $fields = $this->dataType->browseRows->map(function ($res) {
+		//updated for relationships
+        $fields = $this->dataType->readRows->map(function ($res) {
             return $res['field'];
         });
 
-        $table = $this->dataType->browseRows->map(function ($res) {
+        $table = $this->dataType->readRows->map(function ($res) {
             return $res['display_name'];
         });
-
+		
         $rs = $this->model->when(
             count($this->ids) > 0,
             function ($query) {
@@ -36,8 +37,21 @@ class BaseExport extends AbstractExport implements FromCollection
 
         $rs = $rs->map(function ($res) use ($fields) {
             $arr = [];
-            foreach ($fields as $val) {
+            foreach ($this->dataType->readRows as $row) {
+				$val=$row->field;
                 $arr[$val] = $res[$val];
+				// print_r($res);
+				// exit;
+				if($row->type == 'relationship') {
+					$output = View::make('voyager::formfields.relationship', [
+						'view' => 'browse',
+						'row' => $row,
+						'data' => $res,
+						'dataTypeContent' => $res,
+						'options' => $row->details
+					])->render();
+					$arr[$val] = strip_tags($output);
+				}
             }
 
             return $arr;
