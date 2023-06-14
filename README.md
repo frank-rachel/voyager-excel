@@ -24,7 +24,7 @@ a plugin of [voyager](https://github.com/the-control-group/voyager) for excel ex
 ##  <a name='Install'></a>Install
 
 ```bash
-composer require tu6ge/voyager-excel
+composer require frank-rachel/voyager-excel
 ```
 
 ##  <a name='Usage'></a>Usage
@@ -33,14 +33,16 @@ composer require tu6ge/voyager-excel
 * 2. [Allow export all records of special Model, default export selected records](#export-all)
 * 3. [Custom export excel content and format.](#custom-export)
 
-###  1. <a name='disablespecialModel'></a>disable special Model
+###  1. <a name='disablespecialModel'></a>enable / disable special Model
 
-You can disable export button in special Model :
+You have to enable and can explicitly disable export button in special Model :
 
 ```
 class Example extends Model
 {
     public $disable_export = true;
+// or
+    public $enable_export = true;
 
     // ...
 }
