@@ -63,6 +63,11 @@ class Export extends AbstractAction
     {
         $model = new $this->dataType->model_name();
 
+		if (!($model->enable_export)) {
+            return $this->redirect();
+        }
+
+
         if ($model->allow_export_all == false && empty(array_filter($ids))) {
             return $this->redirect();
         }
