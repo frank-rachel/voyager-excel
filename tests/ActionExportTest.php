@@ -1,8 +1,8 @@
 <?php
 
-namespace Tu6ge\VoyagerExcel\Tests;
+namespace FrankRachel\VoyagerExcel\Tests;
 
-use Tu6ge\VoyagerExcel\Actions\Export;
+use FrankRachel\VoyagerExcel\Actions\Export;
 
 class ActionExportTest extends TestCase
 {
@@ -32,7 +32,7 @@ class ActionExportTest extends TestCase
             false
         );
 
-        $dataType->model_name = 'Tu6ge\VoyagerExcel\Tests\Foo';
+        $dataType->model_name = 'FrankRachel\VoyagerExcel\Tests\Foo';
         $this->assertEquals(
             $export->shouldActionDisplayOnDataType(),
             false

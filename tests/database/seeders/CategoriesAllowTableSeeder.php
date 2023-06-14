@@ -6,7 +6,7 @@ use TCG\Voyager\Models\DataType;
 use TCG\Voyager\Models\Menu;
 use TCG\Voyager\Models\MenuItem;
 use TCG\Voyager\Models\Permission;
-use Tu6ge\VoyagerExcel\Tests\Models\CategoryAllow;
+use FrankRachel\VoyagerExcel\Tests\Models\CategoryAllow;
 
 class CategoriesAllowTableSeeder extends Seeder
 {
@@ -25,8 +25,8 @@ class CategoriesAllowTableSeeder extends Seeder
                 'display_name_singular' => __('voyager::seeders.data_types.category.singular'),
                 'display_name_plural'   => __('voyager::seeders.data_types.category.plural'),
                 'icon'                  => 'voyager-categories',
-                'model_name'            => 'Tu6ge\\VoyagerExcel\\Tests\\Models\\CategoryAllow',
-                'policy_name'           => 'Tu6ge\\VoyagerExcel\\Tests\\DemoPolicy',
+                'model_name'            => 'FrankRachel\\VoyagerExcel\\Tests\\Models\\CategoryAllow',
+                'policy_name'           => 'FrankRachel\\VoyagerExcel\\Tests\\DemoPolicy',
                 'controller'            => '',
                 'generate_permissions'  => 1,
                 'description'           => '',

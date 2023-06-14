@@ -1,13 +1,13 @@
 <?php
 
-namespace Tu6ge\VoyagerExcel\Tests;
+namespace FrankRachel\VoyagerExcel\Tests;
 
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Maatwebsite\Excel\ExcelServiceProvider;
 use Orchestra\Testbench\BrowserKit\TestCase as OrchestraTestCase;
 use TCG\Voyager\Models\User;
 use TCG\Voyager\VoyagerServiceProvider;
-use Tu6ge\VoyagerExcel\VoyagerExcelServiceProvider;
+use FrankRachel\VoyagerExcel\VoyagerExcelServiceProvider;
 
 class TestCase extends OrchestraTestCase
 {

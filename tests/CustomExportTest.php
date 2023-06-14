@@ -1,6 +1,6 @@
 <?php
 
-namespace Tu6ge\VoyagerExcel\Tests;
+namespace FrankRachel\VoyagerExcel\Tests;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -10,7 +10,7 @@ use TCG\Voyager\Facades\Voyager;
 use TCG\Voyager\Models\Category;
 use TCG\Voyager\Models\DataType;
 use TCG\Voyager\Models\Permission;
-use Tu6ge\VoyagerExcel\Actions\Export;
+use FrankRachel\VoyagerExcel\Actions\Export;
 
 class CustomExportTest extends TestCase
 {
@@ -46,7 +46,7 @@ class CustomExportTest extends TestCase
         Carbon::setTestNow('2021-08-05 12:34:00');
 
         $this->post(route('voyager.categories.action'), [
-            'action' => 'Tu6ge\VoyagerExcel\Actions\Export',
+            'action' => 'FrankRachel\VoyagerExcel\Actions\Export',
             'ids'    => '1',
         ]);
 
@@ -73,7 +73,7 @@ class CustomExportTest extends TestCase
         $dataType = Voyager::model('DataType')->where('name', 'categories')->first();
         $action = new Export($dataType, null);
 
-        $this->expectExceptionMessage('the Tu6ge\VoyagerExcel\Tests\Models\CustomExportThrow model export_handler is not instanceof Tu6ge\VoyagerExcel\Exports\AbstractExport');
+        $this->expectExceptionMessage('the FrankRachel\VoyagerExcel\Tests\Models\CustomExportThrow model export_handler is not instanceof FrankRachel\VoyagerExcel\Exports\AbstractExport');
 
         $action->massAction([1], null);
     }
@@ -94,7 +94,7 @@ class CustomExportTest extends TestCase
         $this->visitRoute('voyager.bread.create', ['table' => 'categories'])
         ->select($name, 'field_input_type_'.$name)
         ->type($options, 'field_details_'.$name)
-        ->type('Tu6ge\\VoyagerExcel\\Tests\\Models\\CustomExport', 'model_name')
+        ->type('FrankRachel\\VoyagerExcel\\Tests\\Models\\CustomExport', 'model_name')
         ->press(__('voyager::generic.submit'))
         ->seeRouteIs('voyager.bread.index');
 
@@ -126,7 +126,7 @@ class CustomExportTest extends TestCase
         $this->visitRoute('voyager.bread.create', ['table' => 'categories'])
         ->select($name, 'field_input_type_'.$name)
         ->type($options, 'field_details_'.$name)
-        ->type('Tu6ge\\VoyagerExcel\\Tests\\Models\\CustomExportThrow', 'model_name')
+        ->type('FrankRachel\\VoyagerExcel\\Tests\\Models\\CustomExportThrow', 'model_name')
         ->press(__('voyager::generic.submit'))
         ->seeRouteIs('voyager.bread.index');
 

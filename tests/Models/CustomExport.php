@@ -1,10 +1,10 @@
 <?php
 
-namespace Tu6ge\VoyagerExcel\Tests\Models;
+namespace FrankRachel\VoyagerExcel\Tests\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Maatwebsite\Excel\Concerns\FromCollection;
-use Tu6ge\VoyagerExcel\Exports\AbstractExport;
+use FrankRachel\VoyagerExcel\Exports\AbstractExport;
 
 class CustomExport extends Model
 {

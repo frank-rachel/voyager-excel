@@ -1,12 +1,12 @@
 <?php
 
-namespace Tu6ge\VoyagerExcel\Tests;
+namespace FrankRachel\VoyagerExcel\Tests;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 use TCG\Voyager\Models\DataType;
 use TCG\Voyager\Models\Permission;
-use Tu6ge\VoyagerExcel\Tests\Models\CategoryDisable;
+use FrankRachel\VoyagerExcel\Tests\Models\CategoryDisable;
 
 class DisableTest extends TestCase
 {
@@ -35,7 +35,7 @@ class DisableTest extends TestCase
 
         $this->visitRoute('voyager.categorydisables.index')
         ->dontsee('Export Excel')
-        ->dontsee('<input type="hidden" name="action" value="Tu6ge\VoyagerExcel\Actions\Export">');
+        ->dontsee('<input type="hidden" name="action" value="FrankRachel\VoyagerExcel\Actions\Export">');
     }
 
     private function createBreadForFormfield($type, $name, $options = '')
@@ -56,8 +56,8 @@ class DisableTest extends TestCase
         $this->visitRoute('voyager.bread.create', ['table' => 'categorydisables'])
         ->select($name, 'field_input_type_'.$name)
         ->type($options, 'field_details_'.$name)
-        ->type('Tu6ge\\VoyagerExcel\\Tests\\Models\\CategoryDisable', 'model_name')
-        //->type('Tu6ge\\VoyagerExcel\\Tests\\DemoPolicy', 'policy_name')
+        ->type('FrankRachel\\VoyagerExcel\\Tests\\Models\\CategoryDisable', 'model_name')
+        //->type('FrankRachel\\VoyagerExcel\\Tests\\DemoPolicy', 'policy_name')
         ->press(__('voyager::generic.submit'))
         ->seeRouteIs('voyager.bread.index');
 

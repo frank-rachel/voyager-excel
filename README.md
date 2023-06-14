@@ -63,14 +63,14 @@ class Example extends Model
 
 Now, You can customize the export excel content and format, Use more features of `maatwebsite/excel`:
 
-1. Create a custom export class , and extends `Tu6ge\VoyagerExcel\Exports\AbstractExport` :
+1. Create a custom export class , and extends `FrankRachel\VoyagerExcel\Exports\AbstractExport` :
 
 ```
 <?php
 
 namespace YourApp;
 
-use Tu6ge\VoyagerExcel\Exports\AbstractExport;
+use FrankRachel\VoyagerExcel\Exports\AbstractExport;
 
 class MyCustomExport extends AbstractExport
 {

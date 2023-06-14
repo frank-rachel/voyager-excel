@@ -1,6 +1,6 @@
 <?php
 
-namespace Tu6ge\VoyagerExcel\Tests;
+namespace FrankRachel\VoyagerExcel\Tests;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -44,7 +44,7 @@ class GeneralTest extends TestCase
 
         $this->visitRoute('voyager.categories.index')
         ->see('Export Excel')
-        ->see('<input type="hidden" name="action" value="Tu6ge\VoyagerExcel\Actions\Export">');
+        ->see('<input type="hidden" name="action" value="FrankRachel\VoyagerExcel\Actions\Export">');
     }
 
     public function testExportPartRecord()
@@ -56,7 +56,7 @@ class GeneralTest extends TestCase
         Carbon::setTestNow('2021-08-05 12:34:00');
 
         $this->post(route('voyager.categories.action'), [
-            'action' => 'Tu6ge\VoyagerExcel\Actions\Export',
+            'action' => 'FrankRachel\VoyagerExcel\Actions\Export',
             'ids'    => '1',
         ]);
 
@@ -83,7 +83,7 @@ class GeneralTest extends TestCase
         $this->initCategory();
 
         $this->post(route('voyager.categories.action'), [
-            'action' => 'Tu6ge\VoyagerExcel\Actions\Export',
+            'action' => 'FrankRachel\VoyagerExcel\Actions\Export',
             'ids'    => '',
         ])->see('window.history.go(-1)');
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tu6ge\VoyagerExcel;
+namespace FrankRachel\VoyagerExcel;
 
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Routing\Router;
@@ -17,6 +17,6 @@ class VoyagerExcelServiceProvider extends ServiceProvider
     {
         $this->loadTranslationsFrom(realpath(__DIR__.'/../resources/lang'), 'voyager_excel');
 
-        Voyager::addAction(\Tu6ge\VoyagerExcel\Actions\Export::class);
+        Voyager::addAction(\FrankRachel\VoyagerExcel\Actions\Export::class);
     }
 }

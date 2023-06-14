@@ -1,6 +1,6 @@
 <?php
 
-namespace Tu6ge\VoyagerExcel\Tests\Models;
+namespace FrankRachel\VoyagerExcel\Tests\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

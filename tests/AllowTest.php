@@ -1,6 +1,6 @@
 <?php
 
-namespace Tu6ge\VoyagerExcel\Tests;
+namespace FrankRachel\VoyagerExcel\Tests;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Schema;
 use Maatwebsite\Excel\Facades\Excel;
 use TCG\Voyager\Models\DataType;
 use TCG\Voyager\Models\Permission;
-use Tu6ge\VoyagerExcel\Tests\Models\CategoryAllow;
+use FrankRachel\VoyagerExcel\Tests\Models\CategoryAllow;
 
 class AllowTest extends TestCase
 {
@@ -37,7 +37,7 @@ class AllowTest extends TestCase
 
         $this->visitRoute('voyager.categoryallows.index')
         ->see('Export Excel')
-        ->see('<input type="hidden" name="action" value="Tu6ge\VoyagerExcel\Actions\Export">');
+        ->see('<input type="hidden" name="action" value="FrankRachel\VoyagerExcel\Actions\Export">');
     }
 
     public function testExportPartRecord()
@@ -49,7 +49,7 @@ class AllowTest extends TestCase
         Carbon::setTestNow('2021-08-05 12:34:00');
 
         $this->post(route('voyager.categoryallows.action'), [
-            'action' => 'Tu6ge\VoyagerExcel\Actions\Export',
+            'action' => 'FrankRachel\VoyagerExcel\Actions\Export',
             'ids'    => '1',
         ]);
 
@@ -80,7 +80,7 @@ class AllowTest extends TestCase
         Carbon::setTestNow('2021-08-05 12:34:00');
 
         $this->post(route('voyager.categoryallows.action'), [
-            'action' => 'Tu6ge\VoyagerExcel\Actions\Export',
+            'action' => 'FrankRachel\VoyagerExcel\Actions\Export',
             'ids'    => '',
         ]);
 
@@ -120,8 +120,8 @@ class AllowTest extends TestCase
         $this->visitRoute('voyager.bread.create', ['table' => 'categoryallows'])
         ->select($name, 'field_input_type_'.$name)
         ->type($options, 'field_details_'.$name)
-        ->type('Tu6ge\\VoyagerExcel\\Tests\\Models\\CategoryAllow', 'model_name')
-        //->type('Tu6ge\\VoyagerExcel\\Tests\\DemoPolicy', 'policy_name')
+        ->type('FrankRachel\\VoyagerExcel\\Tests\\Models\\CategoryAllow', 'model_name')
+        //->type('FrankRachel\\VoyagerExcel\\Tests\\DemoPolicy', 'policy_name')
         ->press(__('voyager::generic.submit'))
         ->seeRouteIs('voyager.bread.index');
 
