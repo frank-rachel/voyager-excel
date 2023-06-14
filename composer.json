@@ -20,18 +20,18 @@
     },
     "autoload": {
         "psr-4": {
-            "Tu6ge\\VoyagerExcel\\": "src/"
+            "FrankRachel\\VoyagerExcel\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tu6ge\\VoyagerExcel\\Tests\\": "tests/"
+            "FrankRachel\\VoyagerExcel\\Tests\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Tu6ge\\VoyagerExcel\\VoyagerExcelServiceProvider"
+                "FrankRachel\\VoyagerExcel\\VoyagerExcelServiceProvider"
             ]
         }
     },
