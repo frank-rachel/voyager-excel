@@ -3,6 +3,7 @@
 namespace FrankRachel\VoyagerExcel\Exports;
 
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Illuminate\Support\Facades\View;
 
 class BaseExport extends AbstractExport implements FromCollection
 {
