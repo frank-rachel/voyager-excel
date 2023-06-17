@@ -31,8 +31,8 @@ class Export extends AbstractAction
             return false;
         }
 		
-		// Not really required since we need to explicitly enable the export
-        // $model = new $this->dataType->model_name();
+		$model = new $this->dataType->model_name();
+        // Not really required since we need to explicitly enable the export
         // if (!($model instanceof  Model)) {
             // return false;
         // }
