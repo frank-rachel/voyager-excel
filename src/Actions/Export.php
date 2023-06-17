@@ -30,11 +30,12 @@ class Export extends AbstractAction
         if (!class_exists($this->dataType->model_name)) {
             return false;
         }
-
-        $model = new $this->dataType->model_name();
-        if (!($model instanceof  Model)) {
-            return false;
-        }
+		
+		// Not really required since we need to explicitly enable the export
+        // $model = new $this->dataType->model_name();
+        // if (!($model instanceof  Model)) {
+            // return false;
+        // }
 
         if ($model->disable_export) {
             return false;
