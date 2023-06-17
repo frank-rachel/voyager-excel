@@ -24,7 +24,7 @@ class Export extends AbstractAction
     public function shouldActionDisplayOnDataType()
     {
         if (empty($this->dataType->model_name)) {
-            return false;
+            // return false;
         }
 
         if (!class_exists($this->dataType->model_name)) {
