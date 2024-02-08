@@ -63,7 +63,7 @@ class Export extends AbstractAction
     public function massAction($ids, $comingFrom)
     {
         $model = new $this->dataType->model_name();
-
+		set_time_limit(300);
 		if (!($model->enable_export)) {
             return $this->redirect();
         }
