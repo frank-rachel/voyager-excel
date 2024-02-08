@@ -64,6 +64,7 @@ class Export extends AbstractAction
     {
         $model = new $this->dataType->model_name();
 		set_time_limit(300);
+		ini_set('memory_limit', '2048M');
 		if (!($model->enable_export)) {
             return $this->redirect();
         }
