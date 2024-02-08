@@ -13,6 +13,7 @@ class BaseExport extends AbstractExport implements FromCollection
 
     public function __construct($dataType, array $ids)
     {
+		set_time_limit(300);
         $this->dataType = $dataType;
         $this->model = new $dataType->model_name();
         $this->ids = array_filter($ids);
@@ -20,6 +21,7 @@ class BaseExport extends AbstractExport implements FromCollection
 
     public function collection()
     {
+		set_time_limit(300);
 		//updated for relationships
         $fields = $this->dataType->readRows->map(function ($res) {
             return $res['field'];
