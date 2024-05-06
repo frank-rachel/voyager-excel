@@ -98,13 +98,16 @@ class BaseExport extends AbstractExport implements FromCollection
 						$arr[$val] = strip_tags($output);
 					}
 				}
-			}
-		}
+            }
+
+            return $arr;
+        });
 
 		// Merge the table display names with the resulting set
 		$table = collect([$table->toArray()])->merge($rs);
-
 		return $table;
+		
+		
 	}
 
 }
