@@ -51,7 +51,7 @@ class Export extends AbstractAction
     public function getAttributes()
     {
         return [
-            'class' => 'btn btn-sm btn-primary',
+            'class' => 'download-link btn btn-sm btn-primary',
         ];
     }
 

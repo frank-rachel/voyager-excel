@@ -18,12 +18,26 @@ class BaseExport extends AbstractExport implements FromCollection
         $this->model = new $dataType->model_name();
         $this->ids = array_filter($ids);
     }
-
+	
+	public static function voyagertranslate(&$resultset, $lang='') { 
+			if (Voyager::translatable($resultset)) {
+				if ($lang=='') {
+					// echo ('*tr*'.\LaravelLocalization::getCurrentLocale());
+					$resultset=$resultset->translate(\LaravelLocalization::getCurrentLocale(), 'nl');
+				} else {
+					// echo ('*TR*'.\LaravelLocalization::getCurrentLocale().$lang);
+					$resultset=$resultset->translate($lang);
+				}
+			}	
+	}
+	
     public function collection()
     {
 		set_time_limit(300);
 		//updated for relationships
-        $fields = $this->dataType->readRows->map(function ($res) {
+		$rr=$this->dataType->readRows;
+		$this->voyagertranslate($rr);
+        $fields = $rr->map(function ($res) {
             return $res['field'];
         });
 
