@@ -95,13 +95,7 @@ class Export extends AbstractAction
     {
 		$resultset=$this->dataType;
 		if (Voyager::translatable($resultset)) {
-			if ($lang=='') {
-				// echo ('*tr*'.\LaravelLocalization::getCurrentLocale());
-				$resultset=$resultset->translate(\LaravelLocalization::getCurrentLocale(), 'nl');
-			} else {
-				// echo ('*TR*'.\LaravelLocalization::getCurrentLocale().$lang);
-				$resultset=$resultset->translate($lang);
-			}
+			$resultset=$resultset->translate(\LaravelLocalization::getCurrentLocale(), 'nl');
 		}		
 		
         return sprintf('%s_%s.xls', $resultset->display_name_plural, Carbon::now()->format('Y-m-d_H_i'));
