@@ -61,36 +61,45 @@ class BaseExport extends AbstractExport implements FromCollection
 			return $row->display_name;
 		});
 
-		// Fetch the model data based on ids and map detailed views
-		$rs = $this->model->when(
-			count($this->ids) > 0,
-			function ($query) {
-				$query->whereIn($this->model->getKeyName(), $this->ids);
-			}
-		)->get();
+        $rs = $this->model->when(
+            count($this->ids) > 0,
+            function ($query) {
+                $query->whereIn($this->model->getKeyName(), $this->ids);
+            }
+        )->get();
 
-		$rs = $rs->map(function ($res) use ($filteredRows) {
-			$arr = [];
-			foreach ($filteredRows as $row) {
-				$val = $row->field;
-				$arr[$val] = $res[$val];
-
-				if (($row->type == 'timestamp') && ($arr[$val] <> '')) {
-					$arr[$val] = date('d/m/Y', $res[$val]);
+        $rs = $rs->map(function ($res) use ($fields) {
+            $arr = [];
+            foreach ($this->dataType->readRows as $row) {
+				$options = ($row->details);
+				$visible=true;
+				if(isset($options->adminlevel)) {
+					if (!(Auth::user()->hasRole($options->adminlevel))) {
+						$visible=false;
+					}
 				}
-				if ($row->type == 'relationship') {
-					$output = View::make('voyager::formfields.relationship', [
-						'view' => 'browse',
-						'row' => $row,
-						'data' => $res,
-						'dataTypeContent' => $res,
-						'options' => $row->details
-					])->render();
-					$arr[$val] = strip_tags($output);
+				if ($visible) {				
+					$val=$row->field;
+					$arr[$val] = $res[$val];
+					
+					// print_r($res);
+					// exit;
+					if(($row->type == 'timestamp') and ($arr[$val]<>'')) {
+						$arr[$val] = date('d/m/Y', ($res[$val]));
+					}
+					if($row->type == 'relationship') {
+						$output = View::make('voyager::formfields.relationship', [
+							'view' => 'browse',
+							'row' => $row,
+							'data' => $res,
+							'dataTypeContent' => $res,
+							'options' => $row->details
+						])->render();
+						$arr[$val] = strip_tags($output);
+					}
 				}
 			}
-			return $arr;
-		});
+		}
 
 		// Merge the table display names with the resulting set
 		$table = collect([$table->toArray()])->merge($rs);
