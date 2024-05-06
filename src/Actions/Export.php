@@ -8,6 +8,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use TCG\Voyager\Actions\AbstractAction;
 use FrankRachel\VoyagerExcel\Exports\AbstractExport;
 use FrankRachel\VoyagerExcel\Exports\BaseExport;
+use TCG\Voyager\Facades\Voyager;
 
 class Export extends AbstractAction
 {
@@ -92,7 +93,18 @@ class Export extends AbstractAction
 
     protected function getFileName()
     {
-        return sprintf('%s_%s.xls', $this->dataType->display_name_plural, Carbon::now()->format('Y-m-d_H_i'));
+		$resultset=$this->dataType;
+		if (Voyager::translatable($resultset)) {
+			if ($lang=='') {
+				// echo ('*tr*'.\LaravelLocalization::getCurrentLocale());
+				$resultset=$resultset->translate(\LaravelLocalization::getCurrentLocale(), 'nl');
+			} else {
+				// echo ('*TR*'.\LaravelLocalization::getCurrentLocale().$lang);
+				$resultset=$resultset->translate($lang);
+			}
+		}		
+		
+        return sprintf('%s_%s.xls', $resultset->display_name_plural, Carbon::now()->format('Y-m-d_H_i'));
     }
 
     protected function redirect()
