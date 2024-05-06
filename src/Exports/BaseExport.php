@@ -58,9 +58,12 @@ class BaseExport extends AbstractExport implements FromCollection
             foreach ($this->dataType->readRows as $row) {
 				$val=$row->field;
                 $arr[$val] = $res[$val];
-                $arr[$val] = $row->type.' '.$res[$val];
+                
 				// print_r($res);
 				// exit;
+				if($row->type == 'timestamp') {
+					$arr[$val] = date('d/m/Y', strtotime($res[$val]));
+				}
 				if($row->type == 'relationship') {
 					$output = View::make('voyager::formfields.relationship', [
 						'view' => 'browse',
