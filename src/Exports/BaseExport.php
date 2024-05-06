@@ -4,6 +4,7 @@ namespace FrankRachel\VoyagerExcel\Exports;
 
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Illuminate\Support\Facades\View;
+use TCG\Voyager\Facades\Voyager;
 
 class BaseExport extends AbstractExport implements FromCollection
 {
