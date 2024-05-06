@@ -42,7 +42,7 @@ class BaseExport extends AbstractExport implements FromCollection
             return $res['field'];
         });
 
-        $table = $this->dataType->readRows->map(function ($res) {
+        $table = $rr->map(function ($res) {
             return $res['display_name'];
         });
 		
