@@ -61,7 +61,7 @@ class BaseExport extends AbstractExport implements FromCollection
                 
 				// print_r($res);
 				// exit;
-				if($row->type == 'timestamp') {
+				if(($row->type == 'timestamp') and ($arr[$val]<>'')) {
 					$arr[$val] = date('d/m/Y', ($res[$val]));
 				}
 				if($row->type == 'relationship') {
