@@ -32,39 +32,51 @@ class BaseExport extends AbstractExport implements FromCollection
 			}	
 	}
 	
-    public function collection()
-    {
+	public function collection()
+	{
 		set_time_limit(300);
-		//updated for relationships
-		$rr=$this->dataType->readRows;
+
+		// Fetch readRows and apply translations
+		$rr = $this->dataType->readRows;
 		$this->voyagertranslate($rr);
-        $fields = $rr->map(function ($res) {
-            return $res['field'];
-        });
 
-        $table = $rr->map(function ($res) {
-            return $res['display_name'];
-        });
-		
-        $rs = $this->model->when(
-            count($this->ids) > 0,
-            function ($query) {
-                $query->whereIn($this->model->getKeyName(), $this->ids);
-            }
-        )->get();
+		// Filter readRows based on the adminlevel before mapping to fields and table
+		$filteredRows = collect($rr)->filter(function ($row) {
+			$options = json_decode($row->details);
+			if (isset($options->adminlevel)) {
+				return Auth::user()->hasRole($options->adminlevel);
+			}
+			return true; // If no adminlevel is set, the row is visible
+		});
 
-        $rs = $rs->map(function ($res) use ($fields) {
-            $arr = [];
-            foreach ($this->dataType->readRows as $row) {
-				$val=$row->field;
-                $arr[$val] = $res[$val];
-                
-				// print_r($res);
-				// exit;
-				if(($row->type == 'timestamp') and ($arr[$val]<>'')) {
-					$arr[$val] = date('d/m/Y', ($res[$val]));
+		// Map the filtered readRows to fields
+		$fields = $filteredRows->map(function ($row) {
+			return $row->field;
+		});
+
+		// Map the filtered readRows to table display names
+		$table = $filteredRows->map(function ($row) {
+			return $row->display_name;
+		});
+
+		// Fetch the model data based on ids and map detailed views
+		$rs = $this->model->when(
+			count($this->ids) > 0,
+			function ($query) {
+				$query->whereIn($this->model->getKeyName(), $this->ids);
+			}
+		)->get();
+
+		$rs = $rs->map(function ($res) use ($filteredRows) {
+			$arr = [];
+			foreach ($filteredRows as $row) {
+				$val = $row->field;
+				$arr[$val] = $res[$val];
+
+				if (($row->type == 'timestamp') && ($arr[$val] <> '')) {
+					$arr[$val] = date('d/m/Y', $res[$val]);
 				}
-				if($row->type == 'relationship') {
+				if ($row->type == 'relationship') {
 					$output = View::make('voyager::formfields.relationship', [
 						'view' => 'browse',
 						'row' => $row,
@@ -74,13 +86,14 @@ class BaseExport extends AbstractExport implements FromCollection
 					])->render();
 					$arr[$val] = strip_tags($output);
 				}
-            }
+			}
+			return $arr;
+		});
 
-            return $arr;
-        });
+		// Merge the table display names with the resulting set
+		$table = collect([$table->toArray()])->merge($rs);
 
-        $table = collect([$table->toArray()])->merge($rs);
+		return $table;
+	}
 
-        return $table;
-    }
 }
