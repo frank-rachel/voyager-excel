@@ -58,6 +58,7 @@ class BaseExport extends AbstractExport implements FromCollection
             foreach ($this->dataType->readRows as $row) {
 				$val=$row->field;
                 $arr[$val] = $res[$val];
+                $arr[$val] = $row->type.' '.$res[$val];
 				// print_r($res);
 				// exit;
 				if($row->type == 'relationship') {
