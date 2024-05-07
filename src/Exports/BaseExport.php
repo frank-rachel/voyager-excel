@@ -71,6 +71,7 @@ class BaseExport extends AbstractExport implements FromCollection
         $rs = $rs->map(function ($res) use ($fields) {
             $arr = [];
             foreach ($this->dataType->readRows as $row) {
+				set_time_limit(300);
 				$options = ($row->details);
 				$visible=true;
 				if(isset($options->adminlevel)) {
@@ -84,9 +85,14 @@ class BaseExport extends AbstractExport implements FromCollection
 					
 					// print_r($res);
 					// exit;
-					if(($row->type == 'timestamp') and ($arr[$val]<>'')) {
-						$arr[$val] = date('d/m/Y', ($res[$val]));
+					if ($row->type == 'timestamp' && $arr[$val] <> '') {
+						if ($res[$val] instanceof \Illuminate\Support\Carbon) {
+							$arr[$val] = $res[$val]->format('d/m/Y');
+						} else if (is_numeric($res[$val])) {
+							$arr[$val] = date('d/m/Y', $res[$val]);
+						}
 					}
+
 					if($row->type == 'relationship') {
 						$output = View::make('voyager::formfields.relationship', [
 							'view' => 'browse',
