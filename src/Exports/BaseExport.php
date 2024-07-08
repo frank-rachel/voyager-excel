@@ -57,7 +57,22 @@ class BaseExport extends AbstractExport implements FromCollection
 		});
 
 		// Map the filtered readRows to table display names
-		$table = $filteredRows->map(function ($row) {
+		// $table = $filteredRows->map(function ($row) {
+			// return $row->display_name;
+		// });
+
+		// Use the model instance set in the constructor
+		$model = $this->model;
+
+		// Map the filtered readRows to table display names and rename custom fields
+		$table = $filteredRows->map(function ($row) use ($model) {
+			if (strpos($row->field, 'custom') === 0) {
+				// Check if the model has the method getCustomFieldName
+				if (method_exists($model, 'getCustomFieldName')) {
+					$newName = $model->getCustomFieldName($row->field);
+					return $newName;
+				}
+			}
 			return $row->display_name;
 		});
 
