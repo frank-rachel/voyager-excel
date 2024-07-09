@@ -43,12 +43,22 @@ class BaseExport extends AbstractExport implements FromCollection
 		$this->voyagertranslate($rr);
 
 		// Filter readRows based on the adminlevel before mapping to fields and table
-		$filteredRows = collect($rr)->filter(function ($row) {
+		// $filteredRows = collect($rr)->filter(function ($row) {
+			// $options = json_decode($row->details);
+			// if (isset($options->adminlevel)) {
+				// return Auth::user()->hasRole($options->adminlevel);
+			// }
+			// return true; // If no adminlevel is set, the row is visible
+		// });
+
+		// Use the model instance set in the constructor
+		$model = $this->model;
+		$filteredRows = collect($rr)->filter(function ($row) use ($model) {
 			$options = json_decode($row->details);
-			if (isset($options->adminlevel)) {
-				return Auth::user()->hasRole($options->adminlevel);
+			if (isset($options->adminlevel) && !Auth::user()->hasRole($options->adminlevel)) {
+				return false;
 			}
-			return true; // If no adminlevel is set, the row is visible
+			return $model->shouldShowCustomField($row->field);
 		});
 
 		// Map the filtered readRows to fields
@@ -61,8 +71,6 @@ class BaseExport extends AbstractExport implements FromCollection
 			// return $row->display_name;
 		// });
 
-		// Use the model instance set in the constructor
-		$model = $this->model;
 
 		// Map the filtered readRows to table display names and rename custom fields
 		$table = $filteredRows->map(function ($row) use ($model) {
