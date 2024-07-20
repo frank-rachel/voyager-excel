@@ -58,7 +58,7 @@ class BaseExport extends AbstractExport implements FromCollection
 			if (isset($options->adminlevel) && !Auth::user()->hasRole($options->adminlevel)) {
 				return false;
 			}
-			return $model->shouldShowCustomField($row->field);
+			return !method_exists($model, 'shouldShowCustomField') || $model->shouldShowCustomField($row->field);
 		});
 
 		// Map the filtered readRows to fields
